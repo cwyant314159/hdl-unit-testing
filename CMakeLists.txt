@@ -42,35 +42,8 @@ FetchContent_MakeAvailable(googletest)
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest)
 
-#
-# Find verilator and create the verilated HDL static archive.
-#
-find_package(verilator)
-add_library(verilated_control_device)
-verilate(
-    verilated_control_device
-    SOURCES
-        hdl/control_device.sv
-    TRACE
-    VERILATOR_ARGS
-        --x-assign unique
-        --x-initial unique
-        -Wall
-        -Wpedantic
-        -Wwarn-lint
-        -Wwarn-style
-)
-
-#
-# Build the unit test applications
-#
-add_executable(
-    test_control_device
-    test/control_device/sim_dut.hpp
-    test/control_device/sim_dut.cpp
-    test/control_device/test.cpp
-    test/test_main.cpp
-)
+add_subdirectory(hdl)
+add_subdirectory(test)
 
 #
 # Link all the applications and libraries together

@@ -46,15 +46,16 @@ void SimDut::enqueueOperation(Operations op, std::uint8_t a, std::uint8_t b)
                            (Operations::OP_NOT_B == op) ? ~(  b  ) :
                                                             0xFF   ;
 
-    const uint32_t common = ((static_cast<uint32_t>(op) & CONTROL_BIT_MASK) << CONTROL_BIT_POS) |
-                            ((sequence_num & SEQ_NUM_MASK  ) << SEQ_NUM_POS);
+    const uint32_t op_code = ((static_cast<uint32_t>(op) & CONTROL_BIT_MASK) << CONTROL_BIT_POS);
+    const uint32_t seq_id  = ((sequence_num & SEQ_NUM_MASK) << SEQ_NUM_POS);
 
-    const uint32_t task = common                                  |
-                          ((a & OPERAND_A_MASK) << OPERAND_A_POS) |
-                          ((b & OPERAND_B_MASK) << OPERAND_B_POS) ;
+    const uint32_t oper_a  = ((a & OPERAND_A_MASK) << OPERAND_A_POS);
+    const uint32_t oper_b  = ((b & OPERAND_B_MASK) << OPERAND_B_POS);
 
-    const uint32_t resp = common                                 |
-                          ((result & RESULT_MASK) << RESULT_POS) ;
+    const uint32_t res     = ((result & RESULT_MASK) << RESULT_POS);
+
+    const uint32_t task = op_code | seq_id | oper_a | oper_b;
+    const uint32_t resp = op_code | seq_id | res;
 
     tasks.push(task);
     expected_results.push(resp);
