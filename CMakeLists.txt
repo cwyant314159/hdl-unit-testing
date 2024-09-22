@@ -48,4 +48,4 @@ add_subdirectory(test)
 #
 # Link all the applications and libraries together
 #
-target_link_libraries(test_control_device verilated_control_device GTest::GTest)
+target_link_libraries(test_flexible_and verilated_flexible_and GTest::GTest)

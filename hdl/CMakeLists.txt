@@ -8,11 +8,11 @@ find_package(verilator REQUIRED)
 #
 # Verilation targets
 #
-add_library(verilated_control_device)
+add_library(verilated_flexible_and)
 verilate(
-    verilated_control_device
+    verilated_flexible_and
     SOURCES
-        control_device.sv
+        flexible_and.sv
     TRACE
     VERILATOR_ARGS
         --x-assign unique
@@ -22,4 +22,3 @@ verilate(
         -Wwarn-lint
         -Wwarn-style
 )
-
