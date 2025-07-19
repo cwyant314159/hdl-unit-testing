@@ -1,0 +1,44 @@
+# File: .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: verilator/verilator:v5.038
+
+    steps:
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.28.x'
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure
+        run: cmake -S. -Bbuild
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Run unit tests
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Archive VCD files
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcd-files-${{ github.run_id }}
+          path: '**/*.vcd'
+          if-no-files-found: warn
+          retention-days: 30
