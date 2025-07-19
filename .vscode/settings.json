@@ -1,4 +1,7 @@
 {
+    "cmake.configureArgs": [],
+    "cmake.buildArgs": [ "--parallel" ],
+    "cmake.ctestArgs": [],
     "files.trimTrailingWhitespace": true,
     "C_Cpp.autoAddFileAssociations": false
 }
