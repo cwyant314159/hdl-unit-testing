@@ -3,20 +3,11 @@
 A simple project demonstrating an HDL verification workflow using Verilator
 and GoogleTest.
 
-## Building
+## Building and Running
 
-The bash script `project_build.sh` is provided to do the CMake and Make calls
-to build the unit test binary __test_flexible_and__. The build assumes that
-Verilator is installed on the system path. The GoogleTest dependency is handled
-by CMake.
-
-## Running
-
-To run the unit tests, execute the following in the repository root:
-
-```bash
-./project_build.sh && ./build/test/test_flexible_and
-```
+The bash script `project_build.sh` is provided to do the CMake calls to build
+and run the unit tests binaries. The build assumes that Verilator is installed
+on the system path. The GoogleTest dependency is handled by CMake.
 
 ## Wave Files
 
