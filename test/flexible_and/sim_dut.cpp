@@ -2,11 +2,15 @@
 
 #include <gtest/gtest.h>
 
-SimDut::SimDut(std::string suite_name, std::string test_name) :
-    time(0)
+SimDut::SimDut(std::string suite_name, std::string test_name)
+    : ctx(std::make_unique<VerilatedContext>())
+    , dut(std::make_unique<Vflexible_and>(ctx.get()))
+    , trace(std::make_unique<VerilatedVcdC>())
+    , time(0)
 {
     const std::string vcd_fname = suite_name + '_' + test_name + ".vcd";
 
+    ctx->traceEverOn(true);
     dut->trace(trace.get(), 99);
     trace->open(vcd_fname.c_str());
 

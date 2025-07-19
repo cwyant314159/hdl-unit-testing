@@ -4,7 +4,6 @@
 int main(int argc, char **argv)
 {
     Verilated::commandArgs(argc, argv);
-    Verilated::traceEverOn(true);
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

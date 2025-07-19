@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.15)
-
 #
 # Flexible AND Gate test application
 #
@@ -10,3 +8,5 @@ add_executable(
     flexible_and/test.cpp
     test_main.cpp
 )
+
+gtest_discover_tests(test_flexible_and)

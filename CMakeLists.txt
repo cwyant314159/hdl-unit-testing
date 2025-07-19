@@ -1,9 +1,11 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.27)
 
 include(FetchContent)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-Set(FETCHCONTENT_QUIET FALSE)
+set(FETCHCONTENT_QUIET FALSE)
+enable_testing()
+
 
 project(
     HdlUnitTesting
@@ -38,7 +40,9 @@ FetchContent_Declare(
         TRUE
 )
 
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+include(GoogleTest)
 add_library(GTest::GTest INTERFACE IMPORTED)
 target_link_libraries(GTest::GTest INTERFACE gtest)
 

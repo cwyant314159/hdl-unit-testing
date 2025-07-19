@@ -23,4 +23,10 @@ if [ "${NUM_BUILD_CORES}" -gt "1" ]; then
 fi
 
 # Do the build
-cmake --build ${CMAKE_BUILD_DIR} ${PARALLEL_BUILD_OPTS}
+cmake --build ${CMAKE_BUILD_DIR} ${PARALLEL_BUILD_OPTS} || {
+    echo "ERROR: The build failed!"
+    exit 1
+}
+
+# Run the tests
+ctest --test-dir ${CMAKE_BUILD_DIR} --output-on-failure

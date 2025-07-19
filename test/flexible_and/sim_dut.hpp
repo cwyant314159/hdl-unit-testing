@@ -23,14 +23,10 @@ public:
 private:
     void wait_cycles(std::size_t cycles);
 
-    std::unique_ptr<Vflexible_and> dut =
-        std::unique_ptr<Vflexible_and>(new Vflexible_and);
-
-    std::unique_ptr<VerilatedVcdC> trace =
-        std::unique_ptr<VerilatedVcdC>(new VerilatedVcdC);
-
+    std::unique_ptr<VerilatedContext> ctx;
+    std::unique_ptr<Vflexible_and> dut;
+    std::unique_ptr<VerilatedVcdC> trace;
     size_t time;
-
     std::queue<Transaction> transactions;
     std::queue<std::uint8_t> expected_y;
 };

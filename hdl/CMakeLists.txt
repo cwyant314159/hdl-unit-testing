@@ -1,9 +1,7 @@
-cmake_minimum_required(VERSION 3.15)
-
 #
 # Look for the verilator executable
 #
-find_package(verilator REQUIRED)
+find_package(verilator CONFIG REQUIRED)
 
 #
 # Verilation targets
@@ -13,7 +11,7 @@ verilate(
     verilated_flexible_and
     SOURCES
         flexible_and.sv
-    TRACE
+    TRACE_VCD
     VERILATOR_ARGS
         --x-assign unique
         --x-initial unique
