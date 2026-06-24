@@ -4,7 +4,6 @@ include(FetchContent)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(FETCHCONTENT_QUIET FALSE)
-enable_testing()
 
 
 project(
@@ -20,12 +19,8 @@ project(
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CMAKE_CXX_FLAGS "-O2 -flto=auto")
-set(CMAKE_EXE_LINKER_FLAG "-flto=auto")
 
 #
 # Fetch the googletest library, and it to the build.
@@ -35,21 +30,15 @@ FetchContent_Declare(
     GIT_REPOSITORY
         https://github.com/google/googletest.git
     GIT_TAG
-        v1.15.2
-    GIT_PROGRESS
-        TRUE
+        v1.17.0
+    EXCLUDE_FROM_ALL
 )
 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
-add_library(GTest::GTest INTERFACE IMPORTED)
-target_link_libraries(GTest::GTest INTERFACE gtest)
 
 add_subdirectory(hdl)
-add_subdirectory(test)
 
-#
-# Link all the applications and libraries together
-#
-target_link_libraries(test_flexible_and verilated_flexible_and GTest::GTest)
+include(CTest)
+add_subdirectory(test)

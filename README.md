@@ -5,9 +5,22 @@ and GoogleTest.
 
 ## Building and Running
 
-The bash script `project_build.sh` is provided to do the CMake calls to build
-and run the unit tests binaries. The build assumes that Verilator is installed
-on the system path. The GoogleTest dependency is handled by CMake.
+CMake presets can be used to build and test this project in either `debug` or
+`release` mode. The build assumes that Verilator is installed on the system.
+The GoogleTest dependency is cloned using `FetchContent` during CMake's
+configure step.
+
+```bash
+# debug
+cmake --preset debug
+cmake --build --preset debug
+ctest --preset debug
+
+# release
+cmake --preset release
+cmake --build --preset release
+ctest --preset release
+```
 
 ## Wave Files
 
@@ -22,12 +35,15 @@ TEST_F(Fixture, TestCase)
 }
 ```
 
+> __NOTE__: `ctest` executes the unit test executables in their respective
+> build folder.
+
 ## Test Binary Command Line Arguments
 
 Test binaries are written such that command line arguments can be passed to
-both the GoogleTest and Verilator runtimes. Verilator arguments are parsed
-before the GoogleTest arguments. If the given Verilator argument causes the
-application to exit, GoogleTest will not have a chance to parse its arguments.
+both the GoogleTest and Verilator runtimes. GoogleTest arguments are parsed
+before the Verilator arguments. If the given GoogleTest argument causes the
+application to exit, Verilator will not have a chance to parse its arguments.
 
 The example below shows a GoogleTest filter for all test cases that start with
 the string "Regular" and sets the Verilator random seed.
