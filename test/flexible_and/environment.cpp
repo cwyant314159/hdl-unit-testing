@@ -11,7 +11,6 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
     , m_ctx{MakeContext()}
     , m_trace{std::make_unique<VerilatedVcdC>()}
     , m_dut{std::make_unique<Vflexible_and>(m_ctx.get())}
-    , m_timeCounter{0}
     , m_clockDriver{}
     , m_ctrlDriver{}
     , m_dataDriver{}
@@ -24,11 +23,13 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
     m_clockDriver.tick = [this]() -> void {
         m_dut->clock = 1;
         m_dut->eval();
-        m_trace->dump(m_timeCounter++);
+        m_ctx->timeInc(1);
+        m_trace->dump(m_ctx->time());
 
         m_dut->clock = 0;
         m_dut->eval();
-        m_trace->dump(m_timeCounter++);
+        m_ctx->timeInc(1);
+        m_trace->dump(m_ctx->time());
     };
 
     m_ctrlDriver.invert_a = [this](bool state) -> void {
@@ -58,11 +59,14 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
     m_ctx->traceEverOn(true);
     m_dut->trace(m_trace.get(), traceLevel);
     m_trace->open(m_vcdFileName.c_str());
+    m_ctx->timeunit(-9);       // 10^-9 = 1ns
+    m_ctx->timeprecision(-11); // 10^-12 = 1ps
 
     // Set initial values for the clocking and reset interface
     m_dut->clock = 0;
     m_dut->reset = 0;
     m_dut->eval();
+
 }
 
 Environment::~Environment()

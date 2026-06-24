@@ -16,7 +16,7 @@ class FlexibleAndFixture : public ::testing::Test
         const std::string suite_name =
             ::testing::UnitTest::GetInstance()->current_test_info()->test_suite_name();
 
-        const std::string testCaseName = suite_name + '_' + test_name + ".vcd";
+        const std::string testCaseName = suite_name + '_' + test_name;
 
         p_env = std::make_unique<Environment>(testCaseName);
         p_env->ResetDut(5);

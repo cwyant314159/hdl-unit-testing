@@ -43,7 +43,6 @@ private:
     std::unique_ptr<VerilatedContext> m_ctx;
     std::unique_ptr<VerilatedVcdC>    m_trace;
     std::unique_ptr<Vflexible_and>    m_dut;
-    std::uint64_t                     m_timeCounter;
     Model<WidthT>                     m_dutModel;
     ClockDriver                       m_clockDriver;
     ControlDriver                     m_ctrlDriver;
