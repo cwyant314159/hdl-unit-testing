@@ -3,7 +3,7 @@
 //
 // The flexible AND gate is a simple HDL block that is sufficiently complex
 // enough to demonstrate using Verilator and GTest as a simulation environment
-// for HDL development
+// for HDL development.
 //
 // Truth table:
 //
@@ -27,6 +27,7 @@
 //
 
 module flexible_and (
+    // clocking interface
     input  logic        clock,
     input  logic        reset,
 
@@ -35,7 +36,7 @@ module flexible_and (
     input  logic        invert_b,
     input  logic        invert_y,
 
-    // logic interface
+    // data interface
     input  logic[7:0]   a,
     input  logic[7:0]   b,
     output logic[7:0]   y
