@@ -59,14 +59,11 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
     m_ctx->traceEverOn(true);
     m_dut->trace(m_trace.get(), traceLevel);
     m_trace->open(m_vcdFileName.c_str());
-    m_ctx->timeunit(-9);       // 10^-9 = 1ns
-    m_ctx->timeprecision(-11); // 10^-12 = 1ps
 
     // Set initial values for the clocking and reset interface
     m_dut->clock = 0;
     m_dut->reset = 0;
     m_dut->eval();
-
 }
 
 Environment::~Environment()
