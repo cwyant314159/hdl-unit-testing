@@ -1,4 +1,5 @@
 {
+  "cmake.configureOnOpen": false,
   "cmake.useCMakePresets": "always",
   "cmake.buildArgs": ["--parallel"],
   "files.trimTrailingWhitespace": true,
