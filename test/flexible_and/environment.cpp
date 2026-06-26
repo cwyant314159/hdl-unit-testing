@@ -11,6 +11,7 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
     , m_ctx{MakeContext()}
     , m_trace{std::make_unique<VerilatedVcdC>()}
     , m_dut{std::make_unique<Vflexible_and>(m_ctx.get())}
+    , m_dutModel{}
     , m_clockDriver{}
     , m_ctrlDriver{}
     , m_dataDriver{}
@@ -56,7 +57,6 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
     m_dataMonitor.monitor = [this]() -> WidthT { return m_dut->y; };
 
     // Setup the verilator infrastructure
-    m_ctx->traceEverOn(true);
     m_dut->trace(m_trace.get(), traceLevel);
     m_trace->open(m_vcdFileName.c_str());
 
@@ -69,6 +69,7 @@ Environment::Environment(const std::string& testCaseName, int traceLevel)
 Environment::~Environment()
 {
     WaitCycles(5);
+    m_trace->flush();
     m_trace->close();
 }
 
@@ -116,5 +117,6 @@ std::unique_ptr<VerilatedContext> Environment::MakeContext()
 {
     auto ctx = std::make_unique<VerilatedContext>();
     ctx->commandArgs(g_programArgs.argc, g_programArgs.argv);
+    ctx->traceEverOn(true);
     return ctx;
 }
