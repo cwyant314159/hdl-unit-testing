@@ -18,14 +18,9 @@ jobs:
         preset: [debug, release]
 
     container:
-      image: verilator/verilator:v5.048
+      image: ghcr.io/cwyant314159/verilator-build-env:latest
 
     steps:
-      - name: Setup CMake
-        uses: jwlawson/actions-setup-cmake@v2
-        with:
-          cmake-version: '3.28.x'
-
       - name: Checkout repository
         uses: actions/checkout@v7
 
